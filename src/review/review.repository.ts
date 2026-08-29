@@ -69,4 +69,59 @@ export class ReviewRepository {
       },
     });
   }
+
+  updateResult(reviewId: string, data: Prisma.ReviewUpdateInput) {
+    return this.prisma.review.update({
+      where: {
+        id: reviewId,
+      },
+
+      data,
+    });
+  }
+
+  createIssues(issues: Prisma.ReviewIssuesCreateManyInput[]) {
+    return this.prisma.reviewIssues.createMany({
+      data: issues,
+    });
+  }
+
+  async completeReview(
+    reviewId: string,
+    score: number,
+    summary: string,
+    issues: Prisma.ReviewIssuesCreateManyInput[],
+  ) {
+    return this.prisma.$transaction(async (tx) => {
+      const review = await tx.review.update({
+        where: {
+          id: reviewId,
+        },
+
+        data: {
+          score,
+          summary,
+          status: 'COMPLETED',
+        },
+      });
+
+      await tx.reviewIssues.createMany({
+        data: issues,
+      });
+
+      return review;
+    });
+  }
+
+  async failReview(reviewId: string) {
+    return this.prisma.review.update({
+      where: {
+        id: reviewId,
+      },
+
+      data: {
+        status: 'FAILED',
+      },
+    });
+  }
 }

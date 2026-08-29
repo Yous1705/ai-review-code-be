@@ -3,13 +3,13 @@ import { z } from 'zod';
 export const CodeReviewIssueSchema = z.object({
   severity: z.enum(['LOW', 'MEDIUM', 'HIGH', 'CRITICAL']),
 
-  line: z.number().int().positive().optional(),
+  line: z.number().int().positive().nullable(),
 
   title: z.string(),
 
   description: z.string(),
 
-  suggestion: z.string().optional(),
+  suggestion: z.string().nullable(),
 });
 
 export const CodeReviewResultSchema = z.object({

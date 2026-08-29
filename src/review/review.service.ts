@@ -27,17 +27,25 @@ export class ReviewService {
     try {
       const result = await this.aiService.reviewCode(dto.code, dto.language);
 
-      // Nanti kita simpan:
-      // score
-      // summary
-      // issues
+      const issues = result.issues.map((issue) => ({
+        reviewId: review.id,
+        severity: issue.severity,
+        line: issue.line,
+        title: issue.title,
+        description: issue.description,
+        suggestion: issue.suggestion,
+      }));
 
-      return {
-        success: true,
-        data: result,
-      };
+      await this.repo.completeReview(
+        review.id,
+        result.score,
+        result.summary,
+        issues,
+      );
+
+      return this.findOne(review.id, userId);
     } catch (error) {
-      // Nanti update status menjadi FAILED
+      await this.repo.failReview(review.id);
 
       throw error;
     }
