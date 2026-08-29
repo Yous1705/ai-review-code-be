@@ -6,6 +6,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { ReviewModule } from './review/review.module';
+import { AiModule } from './ai/ai.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ReviewModule } from './review/review.module';
     PrismaModule,
     UsersModule,
     ReviewModule,
+    AiModule,
   ],
   controllers: [AppController],
   providers: [AppService],

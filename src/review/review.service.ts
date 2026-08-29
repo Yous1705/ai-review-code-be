@@ -3,10 +3,14 @@ import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 import { ReviewRepository } from './review.repository';
 import { ReviewStatus } from 'src/generated/prisma/enums';
+import { AiService } from 'src/ai/ai.service';
 
 @Injectable()
 export class ReviewService {
-  constructor(private readonly repo: ReviewRepository) {}
+  constructor(
+    private readonly repo: ReviewRepository,
+    private readonly aiService: AiService,
+  ) {}
 
   async create(userId: string, dto: CreateReviewDto) {
     const review = await this.repo.create({
@@ -20,11 +24,23 @@ export class ReviewService {
       },
     });
 
-    return {
-      success: true,
-      message: 'Review created successfully',
-      data: review,
-    };
+    try {
+      const result = await this.aiService.reviewCode(dto.code, dto.language);
+
+      // Nanti kita simpan:
+      // score
+      // summary
+      // issues
+
+      return {
+        success: true,
+        data: result,
+      };
+    } catch (error) {
+      // Nanti update status menjadi FAILED
+
+      throw error;
+    }
   }
 
   async findAll(userId: string, page: number, limit: number) {
