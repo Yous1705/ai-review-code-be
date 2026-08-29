@@ -13,6 +13,8 @@ import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { JwtAuthGuard } from './guard/jwt-auth.guard';
+import { CurrentUser } from './decorator/current-user.decorator';
+import { JwtPayload } from './jwt.strategy';
 
 @Controller('auth')
 export class AuthController {
@@ -30,7 +32,7 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Get('me')
-  findMe(@Req() req) {
-    return this.authService.findMe(req.user.sub);
+  findMe(@CurrentUser() user: JwtPayload) {
+    return this.authService.findMe(user.sub);
   }
 }
