@@ -24,6 +24,10 @@ export class ReviewController {
 
   @Post()
   create(@CurrentUser() user: JwtPayload, @Body() dto: CreateReviewDto) {
+    console.log('REVIEW REQUEST FROM FE');
+    console.log('User:', user.sub);
+    console.log('Language:', dto.language);
+    console.log('Code:', dto.code);
     return this.reviewService.create(user.sub, dto);
   }
 

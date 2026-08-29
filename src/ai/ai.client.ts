@@ -1,14 +1,14 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { GoogleGenAI } from '@google/genai';
+import Groq from 'groq-sdk';
 
 @Injectable()
 export class AiClient {
-  private readonly client: GoogleGenAI;
+  private readonly client: Groq;
   private readonly model: string;
 
   constructor(private readonly configService: ConfigService) {
-    this.client = new GoogleGenAI({
+    this.client = new Groq({
       apiKey: this.configService.getOrThrow<string>('AI_API_KEY'),
     });
 
@@ -17,85 +17,112 @@ export class AiClient {
 
   async reviewCode(prompt: string): Promise<string> {
     try {
-      const response = await this.client.models.generateContent({
+      const response = await this.client.chat.completions.create({
         model: this.model,
 
-        contents: prompt,
+        messages: [
+          {
+            role: 'system',
+            content: 'You are an expert software engineer and code reviewer.',
+          },
+          {
+            role: 'user',
+            content: prompt,
+          },
+        ],
 
-        config: {
-          systemInstruction:
-            'You are an expert software engineer and code reviewer.',
+        response_format: {
+          type: 'json_schema',
+          json_schema: {
+            name: 'code_review',
+            strict: true,
+            schema: {
+              type: 'object',
 
-          responseMimeType: 'application/json',
+              properties: {
+                score: {
+                  type: 'integer',
+                  minimum: 0,
+                  maximum: 100,
+                },
 
-          responseSchema: {
-            type: 'object',
+                summary: {
+                  type: 'string',
+                },
 
-            properties: {
-              score: {
-                type: 'integer',
-                minimum: 0,
-                maximum: 100,
-              },
+                issues: {
+                  type: 'array',
 
-              summary: {
-                type: 'string',
-              },
+                  items: {
+                    type: 'object',
 
-              issues: {
-                type: 'array',
+                    properties: {
+                      severity: {
+                        type: 'string',
+                        enum: ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'],
+                      },
 
-                items: {
-                  type: 'object',
+                      line: {
+                        type: ['integer', 'null'],
+                      },
 
-                  properties: {
-                    severity: {
-                      type: 'string',
-                      enum: ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'],
+                      title: {
+                        type: 'string',
+                      },
+
+                      description: {
+                        type: 'string',
+                      },
+
+                      suggestion: {
+                        type: ['string', 'null'],
+                      },
                     },
 
-                    line: {
-                      type: ['integer', 'null'],
-                    },
+                    required: [
+                      'severity',
+                      'line',
+                      'title',
+                      'description',
+                      'suggestion',
+                    ],
 
-                    title: {
-                      type: 'string',
-                    },
-
-                    description: {
-                      type: 'string',
-                    },
-
-                    suggestion: {
-                      type: ['string', 'null'],
-                    },
+                    additionalProperties: false,
                   },
-
-                  required: [
-                    'severity',
-                    'line',
-                    'title',
-                    'description',
-                    'suggestion',
-                  ],
                 },
               },
-            },
 
-            required: ['score', 'summary', 'issues'],
+              required: ['score', 'summary', 'issues'],
+
+              additionalProperties: false,
+            },
           },
         },
+
+        temperature: 0.2,
       });
 
-      const content = response.text;
+      const content = response.choices[0]?.message?.content;
 
       if (!content) {
         throw new Error('AI returned an empty response');
       }
 
       return content;
-    } catch (error) {
-      console.error('AI Client Error:', error);
+    } catch (error: any) {
+      console.error('========== GROQ AI ERROR ==========');
+      console.error('name:', error?.name);
+      console.error('message:', error?.message);
+      console.error('status:', error?.status);
+      console.error('code:', error?.code);
+      console.error('type:', error?.type);
+      console.error('===================================');
+
+      if (error?.status === 429) {
+        throw new InternalServerErrorException(
+          'AI provider rate limit or quota exceeded. Please try again later.',
+        );
+      }
 
       throw new InternalServerErrorException(
         'Failed to communicate with AI provider',
