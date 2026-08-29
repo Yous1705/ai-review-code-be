@@ -56,12 +56,16 @@ export class AuthService {
     };
   }
 
-  async findAll() {
-    const data = await this.repo.findAll();
+  async findMe(id: string) {
+    const user = await this.repo.findMe({ id });
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+
     return {
       success: true,
-      message: 'your data',
-      Data: data,
+      message: 'user found',
+      data: user,
     };
   }
 }

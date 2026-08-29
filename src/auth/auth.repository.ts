@@ -6,8 +6,10 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class AuthRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  findAll() {
-    return this.prisma.user.findMany();
+  findMe(data: Prisma.UserWhereUniqueInput) {
+    return this.prisma.user.findUnique({
+      where: data,
+    });
   }
 
   async findEmail(email: string) {
