@@ -1,4 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { AuthRepository } from './auth.repository';
@@ -29,6 +33,26 @@ export class AuthService {
       success: true,
       message: 'your data has been created',
       Data: data,
+    };
+  }
+
+  async login(dto: { email: string; password: string }) {
+    const user = await this.repo.findEmail(dto.email);
+    if (!user) {
+      throw new UnauthorizedException('Email not found');
+    }
+
+    const isMatch = await bcrypt.compare(dto.password, user.passwordHash);
+    if (!isMatch) {
+      throw new UnauthorizedException('Incorrect password');
+    }
+
+    const payload = { sub: user.id };
+
+    return {
+      success: true,
+      message: 'login successful',
+      access_token: this.jwtService.sign(payload),
     };
   }
 

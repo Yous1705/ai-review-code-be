@@ -20,8 +20,8 @@ export class AuthController {
     return this.authService.register(dto);
   }
 
-  @Get()
-  findAll() {
-    return this.authService.findAll();
+  @Post('login')
+  login(@Body() dto: { email: string; password: string }) {
+    return this.authService.login(dto);
   }
 }
