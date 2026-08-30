@@ -41,6 +41,7 @@ model UserAuthentication{
 model Review{
   id String @id @default(uuid())
   userId String
+  title String @db.VarChar(150)
   code String @db.Text
   language String
   status ReviewStatus @default(PENDING)
