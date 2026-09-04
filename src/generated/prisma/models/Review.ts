@@ -37,7 +37,6 @@ export type ReviewSumAggregateOutputType = {
 export type ReviewMinAggregateOutputType = {
   id: string | null
   userId: string | null
-  title: string | null
   code: string | null
   language: string | null
   status: $Enums.ReviewStatus | null
@@ -50,7 +49,6 @@ export type ReviewMinAggregateOutputType = {
 export type ReviewMaxAggregateOutputType = {
   id: string | null
   userId: string | null
-  title: string | null
   code: string | null
   language: string | null
   status: $Enums.ReviewStatus | null
@@ -63,7 +61,6 @@ export type ReviewMaxAggregateOutputType = {
 export type ReviewCountAggregateOutputType = {
   id: number
   userId: number
-  title: number
   code: number
   language: number
   status: number
@@ -86,7 +83,6 @@ export type ReviewSumAggregateInputType = {
 export type ReviewMinAggregateInputType = {
   id?: true
   userId?: true
-  title?: true
   code?: true
   language?: true
   status?: true
@@ -99,7 +95,6 @@ export type ReviewMinAggregateInputType = {
 export type ReviewMaxAggregateInputType = {
   id?: true
   userId?: true
-  title?: true
   code?: true
   language?: true
   status?: true
@@ -112,7 +107,6 @@ export type ReviewMaxAggregateInputType = {
 export type ReviewCountAggregateInputType = {
   id?: true
   userId?: true
-  title?: true
   code?: true
   language?: true
   status?: true
@@ -212,7 +206,6 @@ export type ReviewGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 export type ReviewGroupByOutputType = {
   id: string
   userId: string
-  title: string
   code: string
   language: string
   status: $Enums.ReviewStatus
@@ -248,7 +241,6 @@ export type ReviewWhereInput = {
   NOT?: Prisma.ReviewWhereInput | Prisma.ReviewWhereInput[]
   id?: Prisma.StringFilter<"Review"> | string
   userId?: Prisma.StringFilter<"Review"> | string
-  title?: Prisma.StringFilter<"Review"> | string
   code?: Prisma.StringFilter<"Review"> | string
   language?: Prisma.StringFilter<"Review"> | string
   status?: Prisma.EnumReviewStatusFilter<"Review"> | $Enums.ReviewStatus
@@ -263,7 +255,6 @@ export type ReviewWhereInput = {
 export type ReviewOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  title?: Prisma.SortOrder
   code?: Prisma.SortOrder
   language?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -281,7 +272,6 @@ export type ReviewWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ReviewWhereInput[]
   NOT?: Prisma.ReviewWhereInput | Prisma.ReviewWhereInput[]
   userId?: Prisma.StringFilter<"Review"> | string
-  title?: Prisma.StringFilter<"Review"> | string
   code?: Prisma.StringFilter<"Review"> | string
   language?: Prisma.StringFilter<"Review"> | string
   status?: Prisma.EnumReviewStatusFilter<"Review"> | $Enums.ReviewStatus
@@ -296,7 +286,6 @@ export type ReviewWhereUniqueInput = Prisma.AtLeast<{
 export type ReviewOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  title?: Prisma.SortOrder
   code?: Prisma.SortOrder
   language?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -317,7 +306,6 @@ export type ReviewScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ReviewScalarWhereWithAggregatesInput | Prisma.ReviewScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Review"> | string
   userId?: Prisma.StringWithAggregatesFilter<"Review"> | string
-  title?: Prisma.StringWithAggregatesFilter<"Review"> | string
   code?: Prisma.StringWithAggregatesFilter<"Review"> | string
   language?: Prisma.StringWithAggregatesFilter<"Review"> | string
   status?: Prisma.EnumReviewStatusWithAggregatesFilter<"Review"> | $Enums.ReviewStatus
@@ -329,7 +317,6 @@ export type ReviewScalarWhereWithAggregatesInput = {
 
 export type ReviewCreateInput = {
   id?: string
-  title: string
   code: string
   language: string
   status?: $Enums.ReviewStatus
@@ -344,7 +331,6 @@ export type ReviewCreateInput = {
 export type ReviewUncheckedCreateInput = {
   id?: string
   userId: string
-  title: string
   code: string
   language: string
   status?: $Enums.ReviewStatus
@@ -357,7 +343,6 @@ export type ReviewUncheckedCreateInput = {
 
 export type ReviewUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   language?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
@@ -372,7 +357,6 @@ export type ReviewUpdateInput = {
 export type ReviewUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   language?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
@@ -386,7 +370,6 @@ export type ReviewUncheckedUpdateInput = {
 export type ReviewCreateManyInput = {
   id?: string
   userId: string
-  title: string
   code: string
   language: string
   status?: $Enums.ReviewStatus
@@ -398,7 +381,6 @@ export type ReviewCreateManyInput = {
 
 export type ReviewUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   language?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
@@ -411,7 +393,6 @@ export type ReviewUpdateManyMutationInput = {
 export type ReviewUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   language?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
@@ -434,7 +415,6 @@ export type ReviewOrderByRelationAggregateInput = {
 export type ReviewCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  title?: Prisma.SortOrder
   code?: Prisma.SortOrder
   language?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -451,7 +431,6 @@ export type ReviewAvgOrderByAggregateInput = {
 export type ReviewMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  title?: Prisma.SortOrder
   code?: Prisma.SortOrder
   language?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -464,7 +443,6 @@ export type ReviewMaxOrderByAggregateInput = {
 export type ReviewMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  title?: Prisma.SortOrder
   code?: Prisma.SortOrder
   language?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -553,7 +531,6 @@ export type ReviewUpdateOneRequiredWithoutIssuesNestedInput = {
 
 export type ReviewCreateWithoutUserInput = {
   id?: string
-  title: string
   code: string
   language: string
   status?: $Enums.ReviewStatus
@@ -566,7 +543,6 @@ export type ReviewCreateWithoutUserInput = {
 
 export type ReviewUncheckedCreateWithoutUserInput = {
   id?: string
-  title: string
   code: string
   language: string
   status?: $Enums.ReviewStatus
@@ -609,7 +585,6 @@ export type ReviewScalarWhereInput = {
   NOT?: Prisma.ReviewScalarWhereInput | Prisma.ReviewScalarWhereInput[]
   id?: Prisma.StringFilter<"Review"> | string
   userId?: Prisma.StringFilter<"Review"> | string
-  title?: Prisma.StringFilter<"Review"> | string
   code?: Prisma.StringFilter<"Review"> | string
   language?: Prisma.StringFilter<"Review"> | string
   status?: Prisma.EnumReviewStatusFilter<"Review"> | $Enums.ReviewStatus
@@ -621,7 +596,6 @@ export type ReviewScalarWhereInput = {
 
 export type ReviewCreateWithoutIssuesInput = {
   id?: string
-  title: string
   code: string
   language: string
   status?: $Enums.ReviewStatus
@@ -635,7 +609,6 @@ export type ReviewCreateWithoutIssuesInput = {
 export type ReviewUncheckedCreateWithoutIssuesInput = {
   id?: string
   userId: string
-  title: string
   code: string
   language: string
   status?: $Enums.ReviewStatus
@@ -663,7 +636,6 @@ export type ReviewUpdateToOneWithWhereWithoutIssuesInput = {
 
 export type ReviewUpdateWithoutIssuesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   language?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
@@ -677,7 +649,6 @@ export type ReviewUpdateWithoutIssuesInput = {
 export type ReviewUncheckedUpdateWithoutIssuesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   language?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
@@ -689,7 +660,6 @@ export type ReviewUncheckedUpdateWithoutIssuesInput = {
 
 export type ReviewCreateManyUserInput = {
   id?: string
-  title: string
   code: string
   language: string
   status?: $Enums.ReviewStatus
@@ -701,7 +671,6 @@ export type ReviewCreateManyUserInput = {
 
 export type ReviewUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   language?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
@@ -714,7 +683,6 @@ export type ReviewUpdateWithoutUserInput = {
 
 export type ReviewUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   language?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
@@ -727,7 +695,6 @@ export type ReviewUncheckedUpdateWithoutUserInput = {
 
 export type ReviewUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   language?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
@@ -771,7 +738,6 @@ export type ReviewCountOutputTypeCountIssuesArgs<ExtArgs extends runtime.Types.E
 export type ReviewSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  title?: boolean
   code?: boolean
   language?: boolean
   status?: boolean
@@ -787,7 +753,6 @@ export type ReviewSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type ReviewSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  title?: boolean
   code?: boolean
   language?: boolean
   status?: boolean
@@ -801,7 +766,6 @@ export type ReviewSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type ReviewSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  title?: boolean
   code?: boolean
   language?: boolean
   status?: boolean
@@ -815,7 +779,6 @@ export type ReviewSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type ReviewSelectScalar = {
   id?: boolean
   userId?: boolean
-  title?: boolean
   code?: boolean
   language?: boolean
   status?: boolean
@@ -825,7 +788,7 @@ export type ReviewSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ReviewOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "title" | "code" | "language" | "status" | "score" | "summary" | "createdAt" | "updatedAt", ExtArgs["result"]["review"]>
+export type ReviewOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "code" | "language" | "status" | "score" | "summary" | "createdAt" | "updatedAt", ExtArgs["result"]["review"]>
 export type ReviewInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   issues?: boolean | Prisma.Review$issuesArgs<ExtArgs>
@@ -847,7 +810,6 @@ export type $ReviewPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
-    title: string
     code: string
     language: string
     status: $Enums.ReviewStatus
@@ -1282,7 +1244,6 @@ export interface Prisma__ReviewClient<T, Null = never, ExtArgs extends runtime.T
 export interface ReviewFieldRefs {
   readonly id: Prisma.FieldRef<"Review", 'String'>
   readonly userId: Prisma.FieldRef<"Review", 'String'>
-  readonly title: Prisma.FieldRef<"Review", 'String'>
   readonly code: Prisma.FieldRef<"Review", 'String'>
   readonly language: Prisma.FieldRef<"Review", 'String'>
   readonly status: Prisma.FieldRef<"Review", 'ReviewStatus'>

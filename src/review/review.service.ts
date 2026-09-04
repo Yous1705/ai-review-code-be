@@ -38,7 +38,6 @@ export class ReviewService {
 
       await this.repo.completeReview(
         review.id,
-        result.title,
         result.score,
         result.summary,
         issues,

@@ -782,7 +782,6 @@ export type UserAuthenticationScalarFieldEnum = (typeof UserAuthenticationScalar
 export const ReviewScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  title: 'title',
   code: 'code',
   language: 'language',
   status: 'status',
