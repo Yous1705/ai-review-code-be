@@ -205,6 +205,7 @@ export type UserAuthenticationOrderByWithRelationInput = {
 
 export type UserAuthenticationWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  provider_providerAccountId?: Prisma.UserAuthenticationProviderProviderAccountIdCompoundUniqueInput
   AND?: Prisma.UserAuthenticationWhereInput | Prisma.UserAuthenticationWhereInput[]
   OR?: Prisma.UserAuthenticationWhereInput[]
   NOT?: Prisma.UserAuthenticationWhereInput | Prisma.UserAuthenticationWhereInput[]
@@ -214,7 +215,7 @@ export type UserAuthenticationWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"UserAuthentication"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserAuthentication"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "id">
+}, "id" | "provider_providerAccountId">
 
 export type UserAuthenticationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -310,6 +311,11 @@ export type UserAuthenticationListRelationFilter = {
 
 export type UserAuthenticationOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type UserAuthenticationProviderProviderAccountIdCompoundUniqueInput = {
+  provider: $Enums.AuthProvider
+  providerAccountId: string
 }
 
 export type UserAuthenticationCountOrderByAggregateInput = {
