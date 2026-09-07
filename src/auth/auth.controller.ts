@@ -17,6 +17,7 @@ import { JwtAuthGuard } from './guard/jwt-auth.guard';
 import { CurrentUser } from './decorator/current-user.decorator';
 import { JwtPayload } from './jwt.strategy';
 import { Response } from 'express';
+import { GoogleAuthGuard } from './guard/google-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -65,5 +66,26 @@ export class AuthController {
       success: true,
       message: 'Logged out successfully',
     };
+  }
+
+  @UseGuards(GoogleAuthGuard)
+  @Get('google')
+  googleLogin() {
+    // Passport redirects the user to Google
+  }
+
+  @UseGuards(GoogleAuthGuard)
+  @Get('google/callback')
+  async googleCallback(@Req() req, @Res({ passthrough: true }) res: Response) {
+    const accessToken = await this.authService.loginWithGoogle(req.user.id);
+
+    res.cookie('access_token', accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 1000 * 60 * 60 * 24,
+    });
+
+    return res.redirect(`${process.env.FRONTEND_URL}/review`);
   }
 }

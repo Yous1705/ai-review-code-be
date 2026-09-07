@@ -8,6 +8,8 @@ import { UpdateAuthDto } from './dto/update-auth.dto';
 import { AuthRepository } from './auth.repository';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { Profile } from 'passport-google-oauth20';
+import { AuthProvider } from 'src/generated/prisma/enums';
 
 @Injectable()
 export class AuthService {
@@ -67,5 +69,63 @@ export class AuthService {
       message: 'user found',
       data: user,
     };
+  }
+
+  async loginWithGoogle(userId: string) {
+    const payload = {
+      sub: userId,
+    };
+
+    return this.jwtService.sign(payload);
+  }
+
+  async validateGoogleUser(profile: Profile) {
+    const googleId = profile.id;
+    const email = profile.emails?.[0]?.value;
+    const name = profile.displayName;
+
+    if (!email) {
+      throw new UnauthorizedException('Email not found in Google profile');
+    }
+
+    const authentication = await this.repo.findAuthentication(
+      AuthProvider.GOOGLE,
+      googleId,
+    );
+
+    if (authentication) {
+      return authentication.user;
+    }
+
+    const existingUser = await this.repo.findEmail(email);
+
+    if (existingUser) {
+      await this.repo.createAuthentication({
+        provider: AuthProvider.GOOGLE,
+        providerAccountId: googleId,
+        user: {
+          connect: { id: existingUser.id },
+        },
+      });
+      return existingUser;
+    }
+
+    const newUser = await this.repo.create({
+      name,
+      email,
+      passwordHash: null,
+    });
+
+    await this.repo.createAuthentication({
+      provider: AuthProvider.GOOGLE,
+      providerAccountId: googleId,
+      user: {
+        connect: {
+          id: newUser.id,
+        },
+      },
+    });
+
+    return newUser;
   }
 }
